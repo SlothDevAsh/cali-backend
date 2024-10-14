@@ -1,0 +1,20 @@
+[
+  {
+    "jobId": "b1358a72-1a1a-4f55-a0ea-bd886b235747",
+    "imageUrl": "",
+    "status": "REJECTED",
+    "timestamp": "2024-10-14T20:15:29.875Z"
+  },
+  {
+    "jobId": "a350af70-4634-4fee-b855-1e03d2db7ac0",
+    "imageUrl": "https://images.unsplash.com/photo-1467825683276-01f37b99c328?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NjQ4NDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3Mjg5MzY5NTF8&ixlib=rb-4.0.3&q=80&w=1080",
+    "status": "RESOLVED",
+    "timestamp": "2024-10-14T20:15:53.457Z"
+  },
+  {
+    "jobId": "a2ab19ea-819d-4104-9a3d-c5551365463e",
+    "imageUrl": "https://images.unsplash.com/photo-1490885578174-acda8905c2c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NjQ4NDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3Mjg5MzcwMzl8&ixlib=rb-4.0.3&q=80&w=1080",
+    "status": "RESOLVED",
+    "timestamp": "2024-10-14T20:17:20.998Z"
+  }
+]
