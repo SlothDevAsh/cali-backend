@@ -1,10 +1,8 @@
+import { filePath } from "../config";
 import { JOB_STATUSES, JobResult } from "../interfaces/job.interface";
 import { getChannel } from "../queues";
 import axios from "axios";
 import fs from "fs";
-import path from "path";
-
-const filePath = path.join(__dirname, "..", "jobResults.json");
 
 export const saveJobResult = (
   jobId: string,
@@ -51,7 +49,7 @@ export const startJobProcessor = async () => {
       const { jobId } = JSON.parse(msg.content.toString());
 
       // Simulate job processing delay
-      const delay = Math.floor(Math.random() * 1) * 1 + 5; // Random delay between 5 and 300 seconds (with 5 seconds of increment)
+      const delay = Math.floor(Math.random() * 61) * 5 + 5; // Random delay between 5 and 300 seconds (with 5 sec step)
 
       // Wait for the delay
       await new Promise((resolve) => setTimeout(resolve, delay * 1000));
@@ -59,6 +57,7 @@ export const startJobProcessor = async () => {
       // Fetching a random Unsplash image from food category
       try {
         const url = `https://api.unsplash.com/photos/random?query=food&count=1&client_id=${process.env.UNSPLASH_API_KEY}`;
+
         const response = await axios.get(url);
 
         const imageUrl = response.data[0].urls.regular;
@@ -70,7 +69,7 @@ export const startJobProcessor = async () => {
       } catch (error) {
         saveJobResult(jobId, "", JOB_STATUSES.REJECTED);
 
-        channel.nack(msg, false, false);
+        channel.nack(msg, false, true); // Negatively acknowledge the message (do not nack all messages up to this one), keeping it in the queue for retrying due to a transient error.
       }
     }
   });
