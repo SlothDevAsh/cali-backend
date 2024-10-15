@@ -31,8 +31,8 @@
   },
   {
     "jobId": "14a8fec6-c866-4048-97a8-d7739ed39aeb",
-    "imageUrl": "",
-    "status": "PENDING",
-    "timestamp": "2024-10-15T15:10:45.414Z"
+    "imageUrl": "https://images.unsplash.com/photo-1475332363216-323c9b7f1e81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NjQ4NDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjkwMDUzMDZ8&ixlib=rb-4.0.3&q=80&w=1080",
+    "status": "RESOLVED",
+    "timestamp": "2024-10-15T15:15:06.140Z"
   }
 ]
