@@ -16,19 +16,20 @@ const PORT = process.env.PORT;
 app.use(express.json());
 
 // Middleware to enable CORS
-app.use(cors());
-
-// Call message queue connection
-connectQueues();
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 // Endpoint to create a new job
 app.post("/jobs", async (req: Request, res: Response) => {
   const jobId = uuidv4();
   const job: IJob = { jobId, status: JOB_STATUSES.PENDING };
 
-  // Respond immediately with the job ID
-  saveJobResult(jobId, "", JOB_STATUSES.PENDING); // Pass null for the imageUrl as it's pending
+  saveJobResult(jobId, "", JOB_STATUSES.PENDING); // pendin state
 
+  // Respond immediately to the client with the job ID
   res.json({ jobId });
 
   // Notify Job Processor to handle the job asynchronously
@@ -60,20 +61,15 @@ app.get("/jobs/:jobId", async (req: Request, res: Response) => {
     results = JSON.parse(data);
   }
 
-  // // Check if results have any entries
-  if (results.length === 0) {
-    res.status(404).json({ message: "No jobs found." });
-  } else {
-    // // Find the job by jobId in the results
-    const jobResult = results.find((result) => result.jobId === jobId);
+  // // Find the job by jobId in the results
+  const jobResult = results.find((result) => result.jobId === jobId);
 
-    if (jobResult) {
-      // If the job is found, return its details
-      res.json(jobResult);
-    } else {
-      // If the job is not found, return a 404 status
-      res.status(404).json({ message: `Job with ID ${jobId} not found.` });
-    }
+  if (jobResult) {
+    // If the job is found, return its details
+    res.json(jobResult);
+  } else {
+    // If the job is not found, return a 404 status
+    res.status(404).json({ message: `Job with ID ${jobId} not found.` });
   }
 });
 
@@ -85,20 +81,12 @@ app.get("/jobs", (req: Request, res: Response) => {
     const data = fs.readFileSync(filePath, "utf-8");
     results = JSON.parse(data);
   }
-
   // Map results to return only jobId and status
   const jobsList = results.map((job: JobResult) => ({
     ...job,
   }));
 
   res.json(jobsList);
-});
-
-// Endpoint to process jobs
-app.get("/", async (req: Request, res: Response) => {
-  res.json({
-    message: "working",
-  });
 });
 
 async function startServer() {

@@ -9,9 +9,7 @@ export interface IJob {
   status: JOB_STATUSES;
 }
 
-export interface JobResult {
-  jobId: string;
+export interface JobResult extends IJob {
   imageUrl: string;
-  status: JOB_STATUSES;
   timestamp: Date;
 }
