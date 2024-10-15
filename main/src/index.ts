@@ -81,6 +81,12 @@ app.get("/jobs", (req: Request, res: Response) => {
     const data = fs.readFileSync(filePath, "utf-8");
     results = JSON.parse(data);
   }
+
+  // Sort results by timestamp in descending order to get the latest job first
+  results.sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+  );
+
   // Map results to return only jobId and status
   const jobsList = results.map((job: JobResult) => ({
     ...job,
