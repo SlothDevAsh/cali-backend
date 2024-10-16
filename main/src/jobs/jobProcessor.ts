@@ -51,7 +51,6 @@ export const startJobProcessor = async () => {
     if (msg) {
       const { jobId } = JSON.parse(msg.content.toString());
 
-      // Simulate job processing delay
       const delay = Math.floor(Math.random() * 61) * 5 + 5; // Random delay between 5 and 300 seconds (with 5 sec step)
 
       // Wait for the delay
