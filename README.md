@@ -55,7 +55,6 @@ To set up the backend, follow these steps:
 
 | Section                      | Time Spent |
 |------------------------------|------------|
-| Project Overview             | 10 minutes | 
 | Basic Structure              | 20 minutes |
 | Setting Up RabbitMQ          | 30 minutes |
 | Implementing API'S           | 30 minutes |
