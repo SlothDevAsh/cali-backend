@@ -39,7 +39,7 @@ To set up the backend, follow these steps:
    ```
 
 3. **Set Up Environment Variables**
-   In the same folder, create a `.env` file in the root directory and add the below necessary environment variables.
+   In the same folder, create a `.env` file and add the below necessary environment variables.
    ```bash
    UNSPLASH_API_KEY = WVyfr1DYNXthvl4-T4zWNbEahyr8cCQ5VHi7ejWIUSk
    PORT = 4000
@@ -47,7 +47,7 @@ To set up the backend, follow these steps:
 
 4. **Start the Server**
    ```bash
-   yarn start
+   yarn run dev
    ```
    This command will start the server, and you will be able to view it at `http://localhost:4000`.
    
