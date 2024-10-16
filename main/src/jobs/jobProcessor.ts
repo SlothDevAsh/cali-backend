@@ -3,6 +3,7 @@ import { JOB_STATUSES, JobResult } from "../interfaces/job.interface";
 import { getChannel } from "../queues";
 import axios from "axios";
 import fs from "fs";
+import { io } from "../index";
 
 export const saveJobResult = (
   jobId: string,
@@ -39,6 +40,8 @@ export const saveJobResult = (
 
   // Write back to file
   fs.writeFileSync(filePath, JSON.stringify(results, null, 2), "utf-8");
+
+  io.emit("jobStatusUpdate", jobResult); // update the client instantly
 };
 
 export const startJobProcessor = async () => {
@@ -69,7 +72,7 @@ export const startJobProcessor = async () => {
       } catch (error) {
         saveJobResult(jobId, "", JOB_STATUSES.REJECTED);
 
-        channel.nack(msg, false, true); // Negatively acknowledge the message (do not nack all messages up to this one), keeping it in the queue for retrying due to a transient error.
+        channel.nack(msg); // Negatively acknowledge the message
       }
     }
   });

@@ -7,20 +7,40 @@ import { saveJobResult, startJobProcessor } from "./jobs/jobProcessor";
 import * as dotenv from "dotenv";
 import fs from "fs";
 import { filePath } from "./config";
+import { createServer } from "http";
+import { Server } from "socket.io";
+
 dotenv.config();
+const PORT = process.env.PORT || 4000;
 
 const app = express();
-const PORT = process.env.PORT;
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+const httpServer = createServer(app);
 
-// Middleware to enable CORS
-app.use(
-  cors({
+const io = new Server(httpServer, {
+  cors: {
     origin: "*",
-  })
-);
+  },
+  allowEIO3: true,
+});
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
+  });
+
+  socket.on("error", (err) => {
+    console.error("Socket error:", err);
+  });
+});
+
+export { io };
+
+// Middleware setup
+app.use(express.json());
+app.use(cors({ origin: "*" }));
 
 // Endpoint to create a new job
 app.post("/jobs", async (req: Request, res: Response) => {
@@ -99,7 +119,7 @@ async function startServer() {
   await connectQueues(); // Connect to RabbitMQ
   await startJobProcessor(); // Start the job processor
 
-  app.listen(PORT, () => {
+  httpServer.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 }
