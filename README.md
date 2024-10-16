@@ -46,6 +46,7 @@ To set up the backend, follow these steps:
    ```
 
 4. **Start the Server**
+   Make sure that RabbitMQ is already running before you execute this command.
    ```bash
    yarn run dev
    ```
