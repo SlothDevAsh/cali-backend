@@ -71,7 +71,7 @@ export const startJobProcessor = async () => {
       } catch (error) {
         saveJobResult(jobId, "", JOB_STATUSES.REJECTED);
 
-        channel.nack(msg); // Negatively acknowledge the message
+        channel.nack(msg, false, false); // Negatively acknowledge the message
       }
     }
   });
